@@ -1,11 +1,16 @@
 <template>
   <div class="advert">
-    <img src="@/assets/images/dhp.jpg" alt="" />
+    <div v-for="(item, index) in advertList" :key="index">
+      <img :src="item.imgUrl" alt="" />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    advertList: Array,
+  },
   data() {
     return {};
   },

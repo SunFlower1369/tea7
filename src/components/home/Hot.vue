@@ -25,16 +25,11 @@ export default {
   components: {
     TitleCard,
   },
-  data() {
-    return {
-      hotList: [],
-    };
+  props: {
+    hotList: Array,
   },
-  created() {
-    this.axios.get("/api/index_list").then((res) => {
-      // console.log(res.data.data);
-      this.hotList = res.data.data.hotList;
-    });
+  data() {
+    return {};
   },
 };
 </script>

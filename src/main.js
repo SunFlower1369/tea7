@@ -11,7 +11,6 @@ import VueAxios from 'vue-axios'
 
 Vue.use(Vant);
 Vue.use(VueAxios, axios)
-
 Vue.config.productionTip = false
 
 new Vue({

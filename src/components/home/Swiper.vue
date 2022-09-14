@@ -15,16 +15,11 @@ import { Lazyload } from "vant";
 Vue.use(Lazyload);
 export default {
   name: "",
-  data() {
-    return {
-      swiperList: [],
-    };
+  props: {
+    swiperList: Array,
   },
-   created() {
-    this.axios.get("/api/index_list").then((res) => {
-      // console.log(res.data.data);
-      this.swiperList = res.data.data.swiperList;
-    });
+  data() {
+    return {};
   },
 };
 </script>

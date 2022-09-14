@@ -32,19 +32,15 @@
 <script>
 import TitleCard from "@/components/home/TitleCard.vue";
 export default {
+    props: {
+    likeList: Array,
+  },
   components: {
     TitleCard,
   },
   data() {
     return {
-      likeList: [],
     };
-  },
-  created() {
-    this.axios.get("/api/index_list").then((res) => {
-      // console.log(res.data.data);
-      this.likeList = res.data.data.likeList;
-    });
   },
 };
 </script>

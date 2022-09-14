@@ -17,7 +17,7 @@ function sqlFun(sql, arr, callback) {
   client.query(sql, arr, function (error, result) {
     //如果连接失败直接返回原因
     if (error) {
-      console.log(error);
+      console.log('出现什么错了');
       retrun;
     }
     callback(result);

@@ -1,6 +1,5 @@
 <template>
   <div class="my">
-      my
     <Tabbar />
   </div>
 </template>

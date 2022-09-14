@@ -16,17 +16,12 @@
 
 <script>
 export default {
+    props: {
+    iconsList: Array,
+  },
   data() {
     return {
-      iconsList: [
-      ],
     };
-  },
-   created() {
-    this.axios.get("/api/index_list").then((res) => {
-      // console.log(res.data.data);
-      this.iconsList = res.data.data.iconsList;
-    });
   },
 };
 </script>

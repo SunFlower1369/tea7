@@ -1,13 +1,13 @@
 <template>
   <div class="header">
-    <div class="logo"><i class="iconfont icon-cha"></i></div>
-    <div class="search">
-      <!-- <i class="iconfont icon-sousuo"></i>
-      <span>搜索您喜欢的...</span> -->
+    <div class="logo">
+      <slot name="left"> </slot>
+    </div>
+    <div class="search" @click="search">
       <van-search placeholder="搜索您喜欢的..." />
     </div>
     <div class="service">
-      <i class="iconfont icon-kefu"></i>
+      <slot name="right"></slot>
     </div>
   </div>
 </template>
@@ -15,12 +15,17 @@
 <script>
 export default {
   name: "",
+  methods: {
+    search() {
+      this.$router.push("/search");
+    },
+  },
 };
 </script>
 
 <style lang='less' scoped>
 i {
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   color: #fff;
 }
 .header {
