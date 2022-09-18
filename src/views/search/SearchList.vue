@@ -31,7 +31,7 @@
         </div>
       </van-sticky>
     </div>
-    <!-- <div class="list">
+    <div class="list">
       <ul>
         <li v-for="item in goodsList" :key="item.id">
           <div class="pic">
@@ -49,33 +49,7 @@
           </div>
         </li>
       </ul>
-    </div> -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      @load="onLoad"
-      class="van-list"
-    >
-      <van-cell
-        v-for="(item, index) in goodsList"
-        :key="index"
-        class="van-cell"
-      >
-        <div class="pic">
-          <img v-lazy="item.imgUrl" alt="" />
-        </div>
-        <div class="title">{{ item.title }}</div>
-        <div class="price">
-          <div class="top">
-            <span>￥</span>
-            <b>{{ item.price }}</b>
-          </div>
-          <div>
-            <van-button color="#b0352f" size="mini">立即购买</van-button>
-          </div>
-        </div>
-      </van-cell>
-    </van-list>
+    </div>
     <!-- <SearchListVantLoading /> -->
     <Tabbar />
   </div>

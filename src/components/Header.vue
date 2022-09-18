@@ -7,7 +7,7 @@
       <van-search placeholder="搜索您喜欢的..." />
     </div>
     <div class="service">
-      <slot name="right"></slot>
+      <slot name="right"> </slot>
     </div>
   </div>
 </template>
@@ -24,10 +24,6 @@ export default {
 </script>
 
 <style lang='less' scoped>
-i {
-  font-size: 1.3rem;
-  color: #fff;
-}
 .header {
   display: flex;
   justify-content: space-around;
@@ -36,6 +32,10 @@ i {
   .search {
     width: 80%;
     padding: 0.5rem 0;
+  }
+  i {
+    font-size: 1.3rem;
+    color: #fff;
   }
 }
 .van-search {

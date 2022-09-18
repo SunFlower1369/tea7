@@ -16,7 +16,7 @@
     </van-grid> -->
     <div class="like-one">
       <ul>
-        <li v-for="item in likeList" :key="item.id">
+        <li v-for="item in likeList" :key="item.id" @click="buyDetail(item.id)">
           <div class="pic"><img :src="item.imgUrl" alt="" /></div>
           <div class="title">{{ item.title }}</div>
           <div class="price">
@@ -32,15 +32,24 @@
 <script>
 import TitleCard from "@/components/home/TitleCard.vue";
 export default {
-    props: {
+  props: {
     likeList: Array,
   },
   components: {
     TitleCard,
   },
   data() {
-    return {
-    };
+    return {};
+  },
+  methods: {
+    buyDetail(id) {
+      this.$router.push({
+        path: "/detail",
+        query: {
+          id,
+        },
+      });
+    },
   },
 };
 </script>

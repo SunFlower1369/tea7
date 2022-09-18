@@ -1,5 +1,6 @@
 <template>
   <div class="list">
+    <van-sticky >
     <Header>
       <template #left>
         <van-icon name="arrow-left" />
@@ -8,7 +9,9 @@
         <i class="iconfont icon-shouye"></i>
       </template>
     </Header>
-    <ListContent />
+    </van-sticky>
+    <!-- <ListContent /> -->
+    <List class="scroll"/>
     <Tabbar />
   </div>
 </template>
@@ -17,19 +20,21 @@
 import Tabbar from "@/components/Tabbar.vue";
 import Header from "@/components/Header.vue";
 import ListContent from "@/components/list/ListContent.vue";
+import List from "@/components/list/index.vue";
 export default {
   components: {
     Tabbar,
     Header,
     ListContent,
+    List,
   },
-  methods: {
-    onClick(name, title) {
-      console.log(name, title);
-    },
-  },
+  methods: {},
 };
 </script>
 <style lang='less' scoped>
+// .scroll{
+//   overflow: scroll;
+//   height: 100%;
+// }
 </style>
 

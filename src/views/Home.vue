@@ -1,14 +1,15 @@
 <template>
   <div class="home">
     <div class="headers">
-      <Header >
-            <template #left>
-        <i class="iconfont icon-cha"></i>
-      </template>
-      <template #right>
-        <i class="iconfont icon-kefu"></i>
-      </template>
+      <Header>
+        <template #left>
+          <i class="iconfont icon-cha"></i>
+        </template>
+        <template #right>
+          <i class="iconfont icon-kefu"></i>
+        </template>
       </Header>
+      <!-- <van-sticky :offset-top="50"> -->
       <div class="tab">
         <van-tabs sticky @click="onClick">
           <van-tab
@@ -32,6 +33,7 @@
           </van-tab>
         </van-tabs>
       </div>
+      <!-- </van-sticky> -->
     </div>
 
     <Tabbar />
@@ -106,6 +108,10 @@ export default {
 }
 /deep/.van-tabs__line {
   background-color: #b54f4a;
+}
+
+/deep/.van-tabs--line .van-tabs__wrap {
+  height: 50px;
 }
 </style>
 

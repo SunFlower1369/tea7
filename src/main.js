@@ -5,7 +5,6 @@ import store from './store'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 import '@/assets/css/common.css'
-import '@/assets/css/iconfont.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
@@ -14,7 +13,7 @@ Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')
