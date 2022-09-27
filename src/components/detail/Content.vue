@@ -25,7 +25,7 @@
           </van-swipe-item>
           <template #indicator>
             <div class="custom-indicator">
-              {{ current + 1 }}/{{ item.imgUrl.length }}
+              {{ current + 1 }}/2
             </div>
           </template>
         </van-swipe>
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import BetterScroll from "better-scroll";
 import api from "@/api/index";
 export default {
   name: "",

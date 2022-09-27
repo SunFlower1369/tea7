@@ -19,7 +19,10 @@ const routes = [{
     {
         path: '/cart',
         name: 'cart',
-        component: Cart
+        component: Cart,
+        meta: {
+            keepAlive: false, //代表b不需要缓存
+        }
     },
     {
         path: '/list',
@@ -51,16 +54,47 @@ const routes = [{
         path: '/detail',
         name: 'Detail',
         component: Detail,
+        meta: {
+            keepAlive: false, //代表b不需要缓存
+        }
     },
-
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    // }
+    {
+        path: '/login',
+        name: 'Login',
+        component: () =>
+            import ('../views/login/Index.vue')
+    },
+    {
+        path: '/passwordLogin',
+        name: 'PasswordLogin',
+        component: () =>
+            import ('../views/login/PasswordLogin.vue')
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () =>
+            import ('../views/login/Register.vue')
+    },
+    {
+        path: '/findPass',
+        name: 'FindPass',
+        component: () =>
+            import ('@/views/login/FindPass.vue'),
+        children: [{
+                path: '/',
+                name: 'FindPassIndex',
+                component: () =>
+                    import ('@/components/findPass/FindPassIndex.vue')
+            },
+            {
+                path: '/findPassTwo',
+                name: 'FindPassTwo',
+                component: () =>
+                    import ('@/components/findPass/FindPassTwo.vue')
+            },
+        ]
+    },
 ]
 
 const router = new VueRouter({

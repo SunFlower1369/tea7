@@ -2,9 +2,6 @@
   <div class="search-list">
     <div class="header-search">
       <Header />
-      <!-- <van-sticky :offset-top="54">
-        <ConditionTab />
-      </van-sticky> -->
       <van-sticky :offset-top="54">
         <div class="condition">
           <ul>
@@ -50,7 +47,6 @@
         </li>
       </ul>
     </div>
-    <!-- <SearchListVantLoading /> -->
     <Tabbar />
   </div>
 </template>
@@ -60,8 +56,6 @@ import Like from "@/components/Like.vue";
 import Tabbar from "@/components/Tabbar.vue";
 import Header from "@/components/search/Header.vue";
 import TitleCard from "@/components/home/TitleCard.vue";
-import ConditionTab from "@/components/search/ConditionTab.vue";
-import SearchListVantLoading from "@/components/search/SearchListVantLoading";
 import api from "@/api/index";
 
 export default {
@@ -70,8 +64,6 @@ export default {
     Tabbar,
     Header,
     TitleCard,
-    ConditionTab,
-    SearchListVantLoading,
   },
   data() {
     return {
@@ -99,9 +91,6 @@ export default {
         [obj.key]: val,
       };
     },
-    // giveChild(){
-    //   return this.goodsList
-    // }
   },
   created() {
     this.getData();

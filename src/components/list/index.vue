@@ -13,6 +13,7 @@
             :key="i"
             :icon="v.imgUrl"
             :text="v.name"
+            @click="searchList(v)"
           />
         </van-grid>
       </van-tab>
@@ -53,8 +54,18 @@ export default {
             this.rightList = right;
             // console.log(res.list);
           }
-          console.log(this.rightList);
+          // console.log(this.rightList);
         });
+    },
+    searchList(val) {
+      //尝试过使用params  可是没有实现
+      // console.log(val);
+      this.$router.push({
+        path: "/search/search-list",
+        query: {
+          key: val.name,
+        },
+      });
     },
     changeList(index) {
       this.activeKey = index;
