@@ -51,13 +51,14 @@
         >
       </van-submit-bar>
     </div>
+    <Tabbar />
   </div>
 </template>
 
 <script>
-import Tabbar from "@/components/Tabbar.vue";
-import api from "@/api/index";
-import { mapMutations, mapState } from "vuex";
+import Tabbar from '@/components/Tabbar.vue';
+import api from '@/api/index';
+import { mapMutations, mapState, mapActions, mapGetters } from 'vuex';
 export default {
   components: {
     Tabbar,
@@ -75,12 +76,14 @@ export default {
     ...mapState({
       list: (state) => state.cartList.cartList,
     }),
+    ...mapGetters(['isCheckAll']),
   },
   methods: {
-    ...mapMutations(["cartList"]),
+    ...mapMutations(['cartList']),
+    ...mapActions(['checkAllFun']),
     onSubmit() {},
     deleteGoods() {
-      console.log("删除");
+      console.log('删除');
     },
     goback() {
       this.$router.back();
@@ -88,7 +91,7 @@ export default {
     async getCartList() {
       await api
         .axios({
-          url: "/api/getCartList",
+          url: '/api/getCartList',
           headers: {
             token: true,
           },
@@ -101,7 +104,7 @@ export default {
   },
 };
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 .header {
   display: flex;
   justify-content: space-between;
@@ -124,7 +127,7 @@ export default {
     padding: 0.5rem 0.8rem;
     margin-bottom: 0.3rem;
     background-color: #fafafa;
-    .mar{
+    .mar {
       margin: 0 0.5rem 0 0;
     }
     .info {
@@ -135,6 +138,10 @@ export default {
       justify-content: space-between;
     }
   }
+}
+
+.van-submit-bar {
+  margin-bottom: 3.125rem;
 }
 
 .van-submit-bar__bar {
@@ -148,4 +155,3 @@ export default {
   justify-content: space-around;
 }
 </style>
-

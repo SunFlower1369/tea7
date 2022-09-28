@@ -12,7 +12,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .floortitle {
   text-align: center;
   padding: 0.2rem 0;
@@ -23,7 +23,7 @@ export default {
   display: inline-block;
 }
 .floortitle span::before {
-  content: "";
+  content: '';
   position: absolute;
   left: -1rem;
   width: 0.5rem;
@@ -35,7 +35,7 @@ export default {
   margin-top: -4px;
 }
 .floortitle span::after {
-  content: "";
+  content: '';
   position: absolute;
   right: -1rem;
   width: 0.5rem;

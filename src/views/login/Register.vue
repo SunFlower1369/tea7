@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import LoginHeader from "@/components/login/LoginHeader.vue";
-import Tabbar from "@/components/Tabbar.vue";
-import api from "@/api/index";
+import LoginHeader from '@/components/login/LoginHeader.vue';
+import Tabbar from '@/components/Tabbar.vue';
+import api from '@/api/index';
 export default {
   components: {
     LoginHeader,
@@ -62,11 +62,11 @@ export default {
   },
   data() {
     return {
-      phone: "",
-      code: "",
-      password: "",
-      nodeCode: "",
-      codeMsg: "获取短信验证码",
+      phone: '',
+      code: '',
+      password: '',
+      nodeCode: '',
+      codeMsg: '获取短信验证码',
       disabled: false,
       codeNum: 10,
     };
@@ -74,16 +74,16 @@ export default {
   methods: {
     //注册
     register() {
-      if (!this.validator("phone")) {
-        return this.$toast.fail("请输入手机号");
+      if (!this.validator('phone')) {
+        return this.$toast.fail('请输入手机号');
       }
-      if (!this.validator("password")) {
-        return this.$toast.fail("请输入密码");
+      if (!this.validator('password')) {
+        return this.$toast.fail('请输入密码');
       }
       api
         .axios({
-          url: "/api/register",
-          method: "POST",
+          url: '/api/register',
+          method: 'POST',
           params: {
             phone: this.phone,
             password: this.password,
@@ -91,7 +91,7 @@ export default {
         })
         .then((res) => {
           if (res.status === 200) {
-            this.$toast.success("注册成功"), this.$router.push("/");
+            this.$toast.success('注册成功'), this.$router.push('/');
           } else if (res.status === 201) {
             this.$toast.fail(res.msg);
           }
@@ -106,8 +106,8 @@ export default {
       // if (!this.validator()) return; // 此处有问题 目前不知道如何修改
       api
         .axios({
-          url: "/api/getCode",
-          method: "POST",
+          url: '/api/getCode',
+          method: 'POST',
           params: {
             phone: this.phone,
           },
@@ -127,7 +127,7 @@ export default {
       //如果倒计时完了重新赋值和可点击
       setTimeout(() => {
         clearInterval(timer);
-        this.codeMsg = "获取短信验证码";
+        this.codeMsg = '获取短信验证码';
         this.codeNum = 10;
         this.disabled = false;
       }, this.codeNum * 1000);
@@ -141,13 +141,13 @@ export default {
       return /^\w{6,12}$/.test(val);
     },
     onFailed(errorInfo) {
-      console.log("failed", errorInfo);
+      console.log('failed', errorInfo);
     },
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .register {
   display: flex;
   flex-direction: column;

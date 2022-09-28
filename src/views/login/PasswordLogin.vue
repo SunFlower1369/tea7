@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import LoginHeader from "@/components/login/LoginHeader.vue";
-import Tabbar from "@/components/Tabbar.vue";
-import api from "@/api/index";
-import { mapMutations } from "vuex";
+import LoginHeader from '@/components/login/LoginHeader.vue';
+import Tabbar from '@/components/Tabbar.vue';
+import api from '@/api/index';
+import { mapMutations } from 'vuex';
 export default {
   components: {
     LoginHeader,
@@ -62,18 +62,18 @@ export default {
   computed: {},
   data() {
     return {
-      phone: "",
-      password: "",
+      phone: '',
+      password: '',
     };
   },
   methods: {
-    ...mapMutations(["loginInfo"]),
+    ...mapMutations(['loginInfo']),
     login() {
-      if (!this.asyncValidator("phone")) return;
+      if (!this.asyncValidator('phone')) return;
       api
         .axios({
-          url: "/api/login",
-          method: "POST",
+          url: '/api/login',
+          method: 'POST',
           params: {
             phone: this.phone,
             password: this.password,
@@ -87,7 +87,7 @@ export default {
               this.$toast.success(res.msg);
               //这里储存到vuex中
               this.loginInfo(res.data);
-              this.$router.push("/my");
+              this.$router.push('/my');
             }, 1000);
           } else {
             this.$toast.success(res.msg);
@@ -96,19 +96,19 @@ export default {
     },
     //注册
     register() {
-      this.$router.push("/register");
+      this.$router.push('/register');
     },
     loginByPhone() {
-      this.$router.push("/login");
+      this.$router.push('/login');
     },
     //找回密码
     findPass() {
-      this.$router.push("/findPass");
+      this.$router.push('/findPass');
     },
     // 异步校验函数返回 Promise
     asyncValidator(val) {
       return new Promise((resolve) => {
-        this.$toast.loading({ message: "验证中...", duration: 800 });
+        this.$toast.loading({ message: '验证中...', duration: 800 });
         setTimeout(() => {
           //   this.$toast.clear();
           resolve(/^1[3456789]\d{9}$/.test(val));
@@ -116,13 +116,13 @@ export default {
       });
     },
     onFailed(errorInfo) {
-      console.log("failed", errorInfo);
+      console.log('failed', errorInfo);
     },
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .index {
   display: flex;
   flex-direction: column;

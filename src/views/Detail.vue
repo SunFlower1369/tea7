@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Content from "@/components/detail/Content.vue";
-import Footer from "@/components/detail/Footer.vue";
+import Content from '@/components/detail/Content.vue';
+import Footer from '@/components/detail/Footer.vue';
 export default {
   components: {
     Content,
@@ -22,5 +22,4 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
-</style>
+<style lang="less" scoped></style>

@@ -17,7 +17,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .advert {
   width: 100%;
   img {

@@ -10,10 +10,9 @@
 <script>
 export default {
   created() {
-    this.$store.commit("initUser");
+    this.$store.commit('initUser');
   },
 };
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>

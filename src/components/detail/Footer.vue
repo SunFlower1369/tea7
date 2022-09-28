@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import api from "@/api/index";
+import api from '@/api/index';
 export default {
   data() {
     return {};
@@ -25,8 +25,8 @@ export default {
       // console.log(this.$route.query.id);
       await api
         .axios({
-          url: "/api/addCart",
-          method: "POST",
+          url: '/api/addCart',
+          method: 'POST',
           params: {
             goods_id: this.$route.query.id,
           },
@@ -40,7 +40,7 @@ export default {
           if (res.status === 200) {
             this.$toast.success(res.msg);
           } else {
-            this.$toast.fail("添加失败");
+            this.$toast.fail('添加失败');
           }
         });
     },
@@ -48,5 +48,4 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
-</style>
+<style lang="less" scoped></style>

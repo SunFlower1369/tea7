@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import TitleCard from "@/components/home/TitleCard.vue";
+import TitleCard from '@/components/home/TitleCard.vue';
 export default {
   components: {
     TitleCard,
@@ -34,7 +34,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .hot {
   text-align: center;
   h1 {

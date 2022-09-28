@@ -18,13 +18,13 @@ export default {
       this.$router.back();
     },
     gohome() {
-      this.$router.push("/");
+      this.$router.push('/');
     },
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .login-header {
   display: flex;
   justify-content: space-between;

@@ -57,11 +57,11 @@
 </template>
 
 <script>
-import Like from "@/components/Like.vue";
-import Tabbar from "@/components/Tabbar.vue";
-import Header from "@/components/search/Header.vue";
-import TitleCard from "@/components/home/TitleCard.vue";
-import api from "@/api/index";
+import Like from '@/components/Like.vue';
+import Tabbar from '@/components/Tabbar.vue';
+import Header from '@/components/search/Header.vue';
+import TitleCard from '@/components/home/TitleCard.vue';
+import api from '@/api/index';
 export default {
   components: {
     Like,
@@ -71,20 +71,20 @@ export default {
   },
   data() {
     return {
-      value: "",
+      value: '',
       searchList: [],
     };
   },
   methods: {
     clear() {
       Dialog.confirm({
-        title: "清空历史记录",
-        message: "请问是否确认清空历史记录？",
+        title: '清空历史记录',
+        message: '请问是否确认清空历史记录？',
       })
         .then(() => {
           // on confirm
           //这边只删除数组的话 本地存储没有删除刷新还是会显示数据  因此还要删除本地存储
-          localStorage.removeItem("searchList");
+          localStorage.removeItem('searchList');
           this.searchList = [];
         })
         .catch(() => {});
@@ -92,7 +92,7 @@ export default {
     onSearch(item) {
       //尝试过使用params  可是没有实现
       this.$router.push({
-        path: "/search/search-list",
+        path: '/search/search-list',
         query: {
           key: item,
         },
@@ -100,12 +100,12 @@ export default {
     },
   },
   created() {
-    this.searchList = JSON.parse(localStorage.getItem("searchList"));
+    this.searchList = JSON.parse(localStorage.getItem('searchList'));
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .main {
   .history {
     padding: 0.625rem;

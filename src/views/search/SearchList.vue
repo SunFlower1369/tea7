@@ -52,11 +52,11 @@
 </template>
 
 <script>
-import Like from "@/components/Like.vue";
-import Tabbar from "@/components/Tabbar.vue";
-import Header from "@/components/search/Header.vue";
-import TitleCard from "@/components/home/TitleCard.vue";
-import api from "@/api/index";
+import Like from '@/components/Like.vue';
+import Tabbar from '@/components/Tabbar.vue';
+import Header from '@/components/search/Header.vue';
+import TitleCard from '@/components/home/TitleCard.vue';
+import api from '@/api/index';
 
 export default {
   components: {
@@ -72,9 +72,9 @@ export default {
         currentIndex: 0,
         data: [
           //如果是status = 0 都不亮  1 上亮 2下亮
-          { name: "综合", status: 0, key: "title" },
-          { name: "价格", status: 0, key: "price" },
-          { name: "销量", status: 0, key: "count" },
+          { name: '综合', status: 0, key: 'title' },
+          { name: '价格', status: 0, key: 'price' },
+          { name: '销量', status: 0, key: 'count' },
         ],
       },
       loading: false,
@@ -86,7 +86,7 @@ export default {
       //知道是哪一个对象
       let obj = this.conditionList.data[this.conditionList.currentIndex];
       //判断是升还是降
-      let val = obj.status == 1 ? "asc" : "desc"; //这句有问题   总是只赋值后面  已解决
+      let val = obj.status == 1 ? 'asc' : 'desc'; //这句有问题   总是只赋值后面  已解决
       return {
         [obj.key]: val,
       };
@@ -114,7 +114,7 @@ export default {
     getData() {
       api
         .axios({
-          url: "/api/goodsList",
+          url: '/api/goodsList',
           params: {
             searchName: this.$route.query.key,
             ...this.orderBy,
@@ -127,7 +127,7 @@ export default {
             this.finished = true;
             // console.log(this.goodsList);
           } else {
-            this.$toast("暂无数据");
+            this.$toast('暂无数据');
           }
         });
     },
@@ -154,7 +154,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 i {
   color: gray;
   font-size: 0.625rem;

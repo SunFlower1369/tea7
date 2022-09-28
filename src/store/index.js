@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import loginInfo from './modules/login'
 import initUser from './modules/login'
 import cartList from './modules/cart'
+import checkAll from './modules/cart'
+import unCheckAll from './modules/cart'
 
 Vue.use(Vuex)
 
@@ -14,6 +16,8 @@ export default new Vuex.Store({
     modules: {
         loginInfo,
         initUser,
-        cartList
+        cartList,
+        checkAll,
+        unCheckAll,
     }
 })

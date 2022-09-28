@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import LoginHeader from "@/components/login/LoginHeader.vue";
-import Tabbar from "@/components/Tabbar.vue";
-import api from "@/api/index";
+import LoginHeader from '@/components/login/LoginHeader.vue';
+import Tabbar from '@/components/Tabbar.vue';
+import api from '@/api/index';
 import { mapMutations } from 'vuex';
 
 export default {
@@ -61,10 +61,10 @@ export default {
   },
   data() {
     return {
-      phone: "",
-      code: "1",
-      nodeCode: "",
-      codeMsg: "获取短信验证码",
+      phone: '',
+      code: '1',
+      nodeCode: '',
+      codeMsg: '获取短信验证码',
       disabled: false,
       codeNum: 10,
     };
@@ -73,26 +73,26 @@ export default {
     ...mapMutations(['loginInfo']),
     login() {
       // console.log(this.code+ '--------------- '+this.nodeCode);
-      if (!this.validator("phone")) {
-        return this.$toast.fail("请输入手机号");
+      if (!this.validator('phone')) {
+        return this.$toast.fail('请输入手机号');
       }
       if (this.code == this.nodeCode) {
         api
           .axios({
-            url: "/api/loginOrAdd",
-            method: "POST",
+            url: '/api/loginOrAdd',
+            method: 'POST',
             params: {
               phone: this.phone,
             },
           })
           .then((res) => {
             if (res.status === 200) {
-              this.$toast.success("登录成功");
+              this.$toast.success('登录成功');
               //这里储存到vuex中
               this.loginInfo(res.data);
-              this.$router.push("/my");
+              this.$router.push('/my');
             } else {
-              this.$toast.fail("验证码错误");
+              this.$toast.fail('验证码错误');
             }
           })
           .catch((err) => {
@@ -102,7 +102,7 @@ export default {
     },
     //注册
     register() {
-      this.$router.push("/register");
+      this.$router.push('/register');
     },
     //获取验证码
     getCode() {
@@ -110,8 +110,8 @@ export default {
       // if (!this.validator()) return; // 此处有问题 目前不知道如何修改
       api
         .axios({
-          url: "/api/getCode",
-          method: "POST",
+          url: '/api/getCode',
+          method: 'POST',
           params: {
             phone: this.phone,
           },
@@ -133,26 +133,26 @@ export default {
       //如果倒计时完了重新赋值和可点击
       setTimeout(() => {
         clearInterval(timer);
-        this.codeMsg = "获取短信验证码";
+        this.codeMsg = '获取短信验证码';
         this.codeNum = 10;
         this.disabled = false;
       }, this.codeNum * 1000);
     },
     loginByPass() {
-      this.$router.push("/passwordLogin");
+      this.$router.push('/passwordLogin');
     },
     // 校验函数返回 true 表示校验通过，false 表示不通过
     validator(val) {
       return /^1[3456789]\d{9}$/.test(val);
     },
     onFailed(errorInfo) {
-      console.log("failed", errorInfo);
+      console.log('failed', errorInfo);
     },
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .index {
   display: flex;
   flex-direction: column;

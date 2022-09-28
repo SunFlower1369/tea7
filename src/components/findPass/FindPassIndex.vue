@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import LoginHeader from "@/components/login/LoginHeader.vue";
-import Tabbar from "@/components/Tabbar.vue";
-import api from "@/api/index";
+import LoginHeader from '@/components/login/LoginHeader.vue';
+import Tabbar from '@/components/Tabbar.vue';
+import api from '@/api/index';
 
 export default {
   components: {
@@ -49,10 +49,10 @@ export default {
   },
   data() {
     return {
-      phone: "",
-      code: "1",
-      nodeCode: "",
-      codeMsg: "获取短信验证码",
+      phone: '',
+      code: '1',
+      nodeCode: '',
+      codeMsg: '获取短信验证码',
       disabled: false,
       codeNum: 10,
     };
@@ -62,13 +62,13 @@ export default {
       //   console.log(this.code+ '--------------- '+this.nodeCode);
       //如果验证码不正确
       if (this.code != this.nodeCode) {
-        return this.$toast.fail("请输入正确的验证码");
+        return this.$toast.fail('请输入正确的验证码');
       }
       //请求后端看看有没有这个手机号
       api
         .axios({
-          url: "/api/selectUser",
-          method: "POST",
+          url: '/api/selectUser',
+          method: 'POST',
           params: {
             phone: this.phone,
           },
@@ -76,7 +76,7 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             this.$router.push({
-              path: "/findPassTwo",
+              path: '/findPassTwo',
               query: {
                 phone: this.phone,
               },
@@ -93,8 +93,8 @@ export default {
       // if (!this.validator()) return; // 此处有问题 目前不知道如何修改
       api
         .axios({
-          url: "/api/getCode",
-          method: "POST",
+          url: '/api/getCode',
+          method: 'POST',
           params: {
             phone: this.phone,
           },
@@ -116,7 +116,7 @@ export default {
       //如果倒计时完了重新赋值和可点击
       setTimeout(() => {
         clearInterval(timer);
-        this.codeMsg = "获取短信验证码";
+        this.codeMsg = '获取短信验证码';
         this.codeNum = 10;
         this.disabled = false;
       }, this.codeNum * 1000);
@@ -126,13 +126,13 @@ export default {
       return /^1[3456789]\d{9}$/.test(val);
     },
     onFailed(errorInfo) {
-      console.log("failed", errorInfo);
+      console.log('failed', errorInfo);
     },
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .index {
   display: flex;
   flex-direction: column;

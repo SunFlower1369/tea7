@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import Tabbar from "@/components/Tabbar.vue";
-import Header from "@/components/Header.vue";
-import List from "@/components/list/index.vue";
+import Tabbar from '@/components/Tabbar.vue';
+import Header from '@/components/Header.vue';
+import List from '@/components/list/index.vue';
 export default {
   components: {
     Tabbar,
@@ -28,10 +28,9 @@ export default {
   methods: {},
 };
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 // .scroll{
 //   overflow: scroll;
 //   height: 100%;
 // }
 </style>
-

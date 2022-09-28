@@ -16,17 +16,16 @@
 
 <script>
 export default {
-    props: {
+  props: {
     iconsList: Array,
   },
   data() {
-    return {
-    };
+    return {};
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .icons {
   display: flex;
   justify-content: space-around;

@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import LoginHeader from "@/components/login/LoginHeader.vue";
-import Tabbar from "@/components/Tabbar.vue";
-import api from "@/api/index";
+import LoginHeader from '@/components/login/LoginHeader.vue';
+import Tabbar from '@/components/Tabbar.vue';
+import api from '@/api/index';
 export default {
   components: {
     LoginHeader,
@@ -35,17 +35,17 @@ export default {
   },
   data() {
     return {
-      password: "",
+      password: '',
     };
   },
   methods: {
     changePass() {
       // console.log(this.$route.query.phone);
-      if (!this.validator("password")) return;
+      if (!this.validator('password')) return;
       api
         .axios({
-          url: "/api/updatePassword",
-          method: "POST",
+          url: '/api/updatePassword',
+          method: 'POST',
           params: {
             phone: this.$route.query.phone,
             password: this.password,
@@ -54,7 +54,7 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             this.$toast.success(res.msg);
-            this.$router.push("/passwordLogin");
+            this.$router.push('/passwordLogin');
           }
         })
         .catch((err) => {
@@ -66,13 +66,13 @@ export default {
       return /^\w{6,12}$/.test(val);
     },
     onFailed(errorInfo) {
-      console.log("failed", errorInfo);
+      console.log('failed', errorInfo);
     },
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .index {
   display: flex;
   flex-direction: column;

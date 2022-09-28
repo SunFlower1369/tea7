@@ -24,9 +24,7 @@
             <img v-lazy="item.imgUrl" />
           </van-swipe-item>
           <template #indicator>
-            <div class="custom-indicator">
-              {{ current + 1 }}/2
-            </div>
+            <div class="custom-indicator">{{ current + 1 }}/2</div>
           </template>
         </van-swipe>
         <!-- 名字和描述价格 -->
@@ -53,12 +51,12 @@
 </template>
 
 <script>
-import api from "@/api/index";
+import api from '@/api/index';
 export default {
-  name: "",
+  name: '',
   data() {
     return {
-      BetterScroll: "",
+      BetterScroll: '',
       isShow: true,
       current: 0,
       detailData: {},
@@ -90,7 +88,7 @@ export default {
     async getDetail() {
       await api
         .axios({
-          url: "api/getDetail",
+          url: 'api/getDetail',
           params: {
             id: this.$route.query.id,
           },
@@ -112,7 +110,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .swiper {
   height: calc(100vh - 50px);
   overflow: scroll;
@@ -178,7 +176,7 @@ export default {
         font-size: 1.25rem;
       }
       .newpeice::before {
-        content: "￥";
+        content: '￥';
         font-size: 1rem;
       }
       .old {

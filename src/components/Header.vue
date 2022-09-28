@@ -14,16 +14,16 @@
 
 <script>
 export default {
-  name: "",
+  name: '',
   methods: {
     search() {
-      this.$router.push("/search");
+      this.$router.push('/search');
     },
   },
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .header {
   display: flex;
   justify-content: space-around;

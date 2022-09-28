@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import TitleCard from "@/components/home/TitleCard.vue";
+import TitleCard from '@/components/home/TitleCard.vue';
 export default {
   props: {
     likeList: Array,
@@ -44,7 +44,7 @@ export default {
   methods: {
     buyDetail(id) {
       this.$router.push({
-        path: "/detail",
+        path: '/detail',
         query: {
           id,
         },
@@ -54,7 +54,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .like {
   .like-one {
     ul {

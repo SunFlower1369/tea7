@@ -19,16 +19,19 @@
 
 <script>
 export default {
-  name: "",
+  name: '',
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .tabs {
   height: 3.125rem;
   span {
     font-size: 1rem;
   }
+}
+.van-tabbar {
+  z-index: 999;
 }
 .van-tabbar-item--active {
   color: #b54f4a;

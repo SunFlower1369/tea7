@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import api from "@/api/index";
+import api from '@/api/index';
 export default {
   data() {
     return {
@@ -38,7 +38,7 @@ export default {
     async getList() {
       await api
         .axios({
-          url: "/api/sortList",
+          url: '/api/sortList',
         })
         .then((res) => {
           if (res.status === 200) {
@@ -61,7 +61,7 @@ export default {
       //尝试过使用params  可是没有实现
       // console.log(val);
       this.$router.push({
-        path: "/search/search-list",
+        path: '/search/search-list',
         query: {
           key: val.name,
         },
@@ -74,7 +74,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .list {
   text-align: center;
   height: calc(100% - 100px);
@@ -143,7 +143,7 @@ export default {
     background-color: #ee0a24;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    content: "";
+    content: '';
   }
 
   /* 右侧导航栏 */

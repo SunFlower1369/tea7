@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import LoginHeader from "@/components/login/LoginHeader.vue";
-import Tabbar from "@/components/Tabbar.vue";
-import { mapMutations, mapState } from "vuex";
+import LoginHeader from '@/components/login/LoginHeader.vue';
+import Tabbar from '@/components/Tabbar.vue';
+import { mapMutations, mapState } from 'vuex';
 export default {
   components: {
     LoginHeader,
@@ -49,14 +49,14 @@ export default {
     return {};
   },
   methods: {
-    ...mapMutations(["logout"]),
+    ...mapMutations(['logout']),
     login() {
-      this.$router.push("/login");
+      this.$router.push('/login');
     },
   },
 };
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 .my {
   height: 100vh;
   width: 100vw;
@@ -107,4 +107,3 @@ export default {
 .van-cell-group {
 }
 </style>
-

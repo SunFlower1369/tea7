@@ -41,14 +41,14 @@
 </template>
 
 <script>
-import Tabbar from "@/components/Tabbar.vue";
-import Swiper from "@/components/home/Swiper.vue";
-import Header from "@/components/Header.vue";
-import Icons from "@/components/home/Icons.vue";
-import Hot from "@/components/home/Hot";
-import Like from "@/components/Like.vue";
-import Advert from "@/components/home/Advert";
-import api from "@/api/index";
+import Tabbar from '@/components/Tabbar.vue';
+import Swiper from '@/components/home/Swiper.vue';
+import Header from '@/components/Header.vue';
+import Icons from '@/components/home/Icons.vue';
+import Hot from '@/components/home/Hot';
+import Like from '@/components/Like.vue';
+import Advert from '@/components/home/Advert';
+import api from '@/api/index';
 export default {
   components: {
     Tabbar,
@@ -72,7 +72,7 @@ export default {
     async addData(name) {
       await api
         .axios({
-          url: "/api/index_list/" + name,
+          url: '/api/index_list/' + name,
         })
         .then((res) => {
           // console.log(typeof res.data.data); 无法判断
@@ -87,7 +87,7 @@ export default {
     async getData() {
       await api
         .axios({
-          url: "/api/index_list/0",
+          url: '/api/index_list/0',
         })
         .then((res) => {
           this.tabsList = Object.freeze(res.data.tabsList);
@@ -100,7 +100,7 @@ export default {
   },
 };
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 .headers {
 }
 /deep/.van-tab--active {
@@ -114,4 +114,3 @@ export default {
   height: 50px;
 }
 </style>
-

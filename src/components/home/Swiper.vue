@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { Lazyload } from "vant";
+import Vue from 'vue';
+import { Lazyload } from 'vant';
 
 Vue.use(Lazyload);
 export default {
-  name: "",
+  name: '',
   props: {
     swiperList: Array,
   },
@@ -24,7 +24,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .swiper {
   height: 12.7581rem;
   width: 100%;
