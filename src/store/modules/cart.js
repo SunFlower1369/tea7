@@ -5,7 +5,19 @@ export default {
     },
     getters: {
         isCheckAll(state) {
+            // console.log(state.cartList);
             return state.cartList.length == state.selectList.length
+        },
+        totalPrice(state) {
+            let totalPrice = 0
+                // console.log(state.cartList);
+            state.cartList.forEach(v => {
+                if (v.checked == true) {
+                    totalPrice += (v.goods_num * v.goods_price) * 100
+                        // console.log(typeof(totalPrice));
+                }
+            })
+            return totalPrice
         }
     },
     mutations: {
@@ -30,12 +42,27 @@ export default {
                 v.checked = false
             })
             state.selectList = []
+        },
+        //单选取消一个或者全部选中联动
+        checkOne(state, index) {
+            // console.log(index);
+            //接收到索引值查询到所对应的id  因为上面  selectList  中保存的是id值
+            let id = state.cartList[index].id;
+            //indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+            let i = state.selectList.indexOf(id);
+            //大于0 代表有 就删除
+            if (i > -1) {
+                return state.selectList.splice(i, 1)
+            } else {
+                //否则就是没有 就添加 
+                state.selectList.push(id)
+            }
         }
-
     },
     actions: {
         checkAllFun({ commit, getters }) {
             getters.isCheckAll ? commit('unCheckAll') : commit('checkAll')
+                // console.log('点击没有');
         }
     },
 }

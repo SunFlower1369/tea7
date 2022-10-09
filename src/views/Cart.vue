@@ -14,20 +14,24 @@
       text="在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。"
     />
     <!-- 商品信息 -->
-    <div class="goods-info">
+    <div class="goods-info" v-if="list">
       <div class="all">
-        <van-checkbox v-model="checked" checked-color="#b0352f"
+        <van-checkbox
+          :value="isCheckAll"
+          checked-color="#b0352f"
+          @click="checkAllFun"
           >商品</van-checkbox
         >
       </div>
       <div class="goods-one" v-for="(item, index) in list" :key="index">
         <van-checkbox
-          v-model="checked"
+          v-model="item.checked"
           checked-color="#b0352f"
           class="mar"
+          @click="checkOne(index)"
         ></van-checkbox>
         <van-card
-          :price="item.goods_price"
+          :price="item.goods_price.toFixed(2)"
           :thumb="item.goods_imgUrl"
           class="info"
         >
@@ -43,10 +47,21 @@
         </van-card>
       </div>
     </div>
+    <div v-else class="noCart">
+      <i class="iconfont icon-liwuhuodong"></i>
+      <span>购物车暂无数据</span>
+    </div>
     <!-- 底部结算等 -->
     <div class="footer">
-      <van-submit-bar :price="allMoney" button-text="去结算" @submit="onSubmit">
-        <van-checkbox v-model="checked" checked-color="#b0352f"
+      <van-submit-bar
+        :price="totalPrice"
+        button-text="去结算"
+        @submit="onSubmit"
+      >
+        <van-checkbox
+          :value="isCheckAll"
+          checked-color="#b0352f"
+          @click="checkAllFun"
           >全选</van-checkbox
         >
       </van-submit-bar>
@@ -64,10 +79,7 @@ export default {
     Tabbar,
   },
   data() {
-    return {
-      checked: true,
-      allMoney: 0,
-    };
+    return {};
   },
   created() {
     this.getCartList();
@@ -76,10 +88,10 @@ export default {
     ...mapState({
       list: (state) => state.cartList.cartList,
     }),
-    ...mapGetters(['isCheckAll']),
+    ...mapGetters(['isCheckAll', 'totalPrice']),
   },
   methods: {
-    ...mapMutations(['cartList']),
+    ...mapMutations(['cartList', 'checkOne']),
     ...mapActions(['checkAllFun']),
     onSubmit() {},
     deleteGoods() {
@@ -98,6 +110,9 @@ export default {
         })
         .then((res) => {
           // console.log( res.data);
+          res.data.forEach((res) => {
+            res['checked'] = true;
+          });
           this.cartList(res.data);
         });
     },
@@ -140,6 +155,20 @@ export default {
   }
 }
 
+.noCart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3rem;
+  i {
+    font-size: 8rem;
+    color: #dddddd;
+  }
+  span {
+    color: #9e9e9e;
+  }
+}
+
 .van-submit-bar {
   margin-bottom: 3.125rem;
 }
@@ -149,6 +178,7 @@ export default {
 }
 .van-card {
   padding: 0;
+  font-size: 1rem;
 }
 
 .van-card__content {
