@@ -6,15 +6,17 @@ export default {
     getters: {
         isCheckAll(state) {
             // console.log(state.cartList);
+            console.log(1);
             return state.cartList.length == state.selectList.length
         },
         totalPrice(state) {
-            let totalPrice = 0
-                // console.log(state.cartList);
+            let totalPrice = 0;
+            // console.log(state.cartList);
+            console.log(2);
             state.cartList.forEach(v => {
                 if (v.checked == true) {
-                    totalPrice += (v.goods_num * v.goods_price) * 100
-                        // console.log(typeof(totalPrice));
+                    totalPrice += (v.goods_num * v.goods_price) * 100;
+                    // console.log(typeof(totalPrice));
                 }
             })
             return totalPrice
@@ -22,9 +24,9 @@ export default {
     },
     mutations: {
         cartList(state, listArr) {
-            state.cartList = listArr
-                // console.log(' 这里是store');
-                // console.log(state.cartList);
+            state.cartList = listArr;
+            // console.log(' 这里是store');
+            // console.log(state.cartList);
             state.selectList = state.cartList.map(v => {
                 return v.id;
             })
@@ -61,8 +63,8 @@ export default {
     },
     actions: {
         checkAllFun({ commit, getters }) {
-            getters.isCheckAll ? commit('unCheckAll') : commit('checkAll')
-                // console.log('点击没有');
+            getters.isCheckAll ? commit('unCheckAll') : commit('checkAll');
+            // console.log('点击没有');
         }
     },
 }

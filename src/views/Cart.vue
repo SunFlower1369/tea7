@@ -59,7 +59,7 @@
         @submit="onSubmit"
       >
         <van-checkbox
-          :value="isCheckAll"
+          :value="checked"
           checked-color="#b0352f"
           @click="checkAllFun"
           >全选</van-checkbox
@@ -79,7 +79,9 @@ export default {
     Tabbar,
   },
   data() {
-    return {};
+    return {
+      checked: true,
+    };
   },
   created() {
     this.getCartList();
