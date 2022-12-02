@@ -14,7 +14,7 @@
     <section>
       <p class="center">个人中心</p>
       <van-cell-group>
-        <van-cell title="地址管理" is-link icon="shop-o" />
+        <van-cell title="地址管理" is-link icon="shop-o" to="/address" />
         <van-cell title="其他设置" is-link icon="shop-o" />
         <van-cell
           title="退出登录"

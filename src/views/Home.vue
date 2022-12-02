@@ -45,9 +45,9 @@ import Tabbar from '@/components/Tabbar.vue';
 import Swiper from '@/components/home/Swiper.vue';
 import Header from '@/components/Header.vue';
 import Icons from '@/components/home/Icons.vue';
-import Hot from '@/components/home/Hot';
+import Hot from '@/components/home/Hot.vue';
 import Like from '@/components/Like.vue';
-import Advert from '@/components/home/Advert';
+import Advert from '@/components/home/Advert.vue';
 import api from '@/api/index';
 export default {
   components: {
@@ -103,14 +103,14 @@ export default {
 <style lang="less" scoped>
 .headers {
 }
-/deep/.van-tab--active {
+:deep(.van-tab--active) {
   color: #b54f4a;
 }
-/deep/.van-tabs__line {
+:deep(.van-tabs__line) {
   background-color: #b54f4a;
 }
 
-/deep/.van-tabs--line .van-tabs__wrap {
+:deep(.van-tabs--line .van-tabs__wrap) {
   height: 50px;
 }
 </style>

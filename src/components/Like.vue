@@ -6,14 +6,6 @@
         <span>猜你喜欢</span>
       </TitleCard>
     </div>
-    <!-- <van-grid :gutter="10" :column-num="2" >
-      <van-grid-item
-        v-for="value in 8"
-        :key="value"
-        icon="photo-o"
-        text="文字"
-      />
-    </van-grid> -->
     <div class="like-one">
       <ul>
         <li v-for="item in likeList" :key="item.id" @click="buyDetail(item.id)">

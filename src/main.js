@@ -7,6 +7,8 @@ import 'vant/lib/index.css'
 import '@/assets/css/common.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+//导入路由拦截
+import './router/loginToken';
 
 Vue.use(Vant);
 Vue.use(VueAxios, axios)

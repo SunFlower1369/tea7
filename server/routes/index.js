@@ -689,7 +689,7 @@ router.post('/addCart', (req, res) => {
                     let id = resultSelect[0].id
                         // console.log(resultSelect[0].goods_num);
                     let sqlUpdateNum = 'update goods_cart set goods_num  =  ' + (num + 1) + ' where id = ' + id + ''
-                    console.log('update goods_cart set goods_num  =  ' + num + ' where id = ' + id + '');
+                        // console.log('update goods_cart set goods_num  =  ' + num + ' where id = ' + id + '');
                     sqlFun(sqlUpdateNum, null, (r) => {
                         res.send({
                             status: 200,
@@ -701,7 +701,7 @@ router.post('/addCart', (req, res) => {
                     // console.log(uId, goods_id, goods_name, goods_price, goods_imgUrl);
                     let arr = [uId, goods_id, goods_name, goods_price, goods_imgUrl]
                     let sqlInsert = 'insert into goods_cart (uId, goods_id, goods_name, goods_num, goods_price, goods_imgUrl) values ("' + uId + '","' + goods_id + '","' + goods_name + '","1","' + goods_price + '","' + goods_imgUrl + '")'
-                    console.log('insert into goods_cart (uId, goods_id, goods_name, goods_num, goods_price, goods_imgUrl) values (' + uId + ',' + goods_id + ',"' + goods_name + '",1,' + goods_price + ',"' + goods_imgUrl + '")');
+                        //console.log('insert into goods_cart (uId, goods_id, goods_name, goods_num, goods_price, goods_imgUrl) values (' + uId + ',' + goods_id + ',"' + goods_name + '",1,' + goods_price + ',"' + goods_imgUrl + '")');
                     sqlFun(sqlInsert, null, (resultAddGoods) => {
                         res.send({
                             status: 200,
@@ -741,4 +741,429 @@ router.get('/getCartList', (req, res) => {
         }
     })
 })
+
+//购物车页面删除商品
+router.get('/deleteGoods', (req, res) => {
+    const cartDeleteArr = req.query.cartDeleteArr;
+    // console.log(cartDeleteArr[1]);
+    for (let i = 0; i < cartDeleteArr.length; i++) {
+        let sql = 'delete from goods_cart where id = ' + cartDeleteArr[i] + ''
+        sqlFun(sql, null, (result) => {
+            if (i == cartDeleteArr.length - 1) {
+                res.send({
+                    status: 200,
+                    msg: '删除成功'
+                })
+            }
+        })
+    }
+})
+
+
+//更新购物车页面商品数量
+router.get('/updateCount', (req, res) => {
+    const id = req.query.id;
+    const goods_num = req.query.goods_num;
+    // console.log(id, goods_num);
+    let sql = 'update goods_cart set goods_num = ' + goods_num + ' where id = ' + id + ''
+    sqlFun(sql, null, (result) => {
+        if (result.length > 0) {
+            res.send({
+                status: 200,
+                msg: '更新成功'
+            })
+        }
+    })
+})
+
+
+
+
+//开始做地址管理1
+router.get('/addAddress', (req, res) => {
+    let query = req.query
+    let token = req.headers.token
+    let user = jwt.decode(token)
+        // console.log(user, query);
+        //用户的信息
+    let name = query.name //这个是用户名称
+    let tel = query.tel
+    let province = query.province
+    let city = query.city
+    let county = query.county
+    let addressDetail = query.addressDetail
+    let isDefault = query.isDefault
+    let areaCode = query.areaCode
+        //查询用户
+    let sql = 'select * from user where user_name = ' + user.user_name + ''
+    sqlFun(sql, null, result => {
+        //记录查询出来的userid
+        let uId = result[0].id
+            // console.log(uId);
+        if (isDefault != 1) {
+            let sqlInsert = 'insert into address values(null,?,?,?,?,?,?,?,?,?)'
+            let arrInfo = [uId, name, tel, province, city, county, addressDetail, isDefault, areaCode]
+            sqlFun(sqlInsert, arrInfo, result => {
+                res.send({
+                    status: 200,
+                    msg: '添加成功'
+                })
+            })
+        } else {
+            let select = 'select * from address where uId = ' + uId + ' and isDefault = "' + isDefault + '"'
+            sqlFun(select, null, result => {
+                if (result.length > 0) {
+                    let addressId = result[0].id
+                    let update = 'update address set isDefault = 0 where id = ' + addressId + ''
+                    sqlFun(update, null, result1 => {
+                        let sqlInsert = 'insert into address values(null,?,?,?,?,?,?,?,?,?)'
+                        let arrInfo = [uId, name, tel, province, city, county, addressDetail, isDefault, areaCode]
+                        sqlFun(sqlInsert, arrInfo, result => {
+                            res.send({
+                                status: 200,
+                                msg: '添加成功'
+                            })
+                        })
+                    })
+                } else {
+                    let sqlInsert = 'insert into address values(null,?,?,?,?,?,?,?,?,?)'
+                    let arrInfo = [uId, name, tel, province, city, county, addressDetail, isDefault, areaCode]
+                    sqlFun(sqlInsert, arrInfo, result => {
+                        res.send({
+                            status: 200,
+                            msg: '添加成功'
+                        })
+                    })
+                }
+
+            })
+        }
+    })
+})
+
+
+//进入地址管理首页加载地址
+router.get('/getAddress', (req, res) => {
+    let token = req.headers.token
+    let user = jwt.decode(token)
+        // console.log(user.user_name);
+    let sql = 'select * from user where user_name = ' + user.user_name + ''
+    sqlFun(sql, null, result => {
+        //记录查询出来的userid
+        let uId = result[0].id
+            // console.log(uId);
+        let sqlAddress = 'select * from address where uId = ' + uId + ''
+        sqlFun(sqlAddress, null, result1 => {
+            if (result1.length > 0) {
+                res.send({
+                    status: 200,
+                    msg: '获取地址',
+                    data: result1
+                })
+            } else {
+                res.send({
+                    status: 400,
+                    msg: '暂无地址'
+                })
+            }
+        })
+    })
+})
+
+//更新地址
+router.get('/updateAddress', (req, res) => {
+    let token = req.headers.token
+    let user = jwt.decode(token)
+        // console.log(req.query);
+    let id = req.query.id //这个是用户名称
+    let name = req.query.name //这个是用户名称
+    let tel = req.query.tel
+    let province = req.query.province
+    let city = req.query.city
+    let county = req.query.county
+    let addressDetail = req.query.addressDetail
+    let isDefault = req.query.isDefault
+    let areaCode = req.query.areaCode
+    let sql = 'select * from user where user_name = ' + user.user_name + ''
+    sqlFun(sql, null, result => {
+        //记录查询出来的userid
+        let uId = result[0].id
+            // 对应查询到0 或者 1 有没有默认收货地址
+        let sqlSelect = 'select * from address where uId = ' + uId + ' and isDefault = ' + isDefault + ''
+        sqlFun(sqlSelect, null, result1 => {
+            if (result1.length > 0) {
+                let addressId = result1[0].id
+                let sss = 'update address set isDefault = 0 where id = ' + addressId + ''
+                sqlFun(sss, null, result2 => {
+                    let arrInfo = [uId, name, tel, province, city, county, addressDetail, isDefault, areaCode]
+                    let sqlupdate = 'update address set uId = ? , name = ? , tel = ? , province = ? , city = ? ,county = ? , addressDetail = ? , isDefault = ? , areaCode = ? where id = ' + id + ''
+                    sqlFun(sqlupdate, arrInfo, result3 => {
+                        res.send({
+                            status: 200,
+                            msg: '更新成功'
+                        })
+                    })
+                })
+            } else {
+                let arrInfo = [uId, name, tel, province, city, county, addressDetail, isDefault, areaCode]
+                let sqlupdate = 'update address set uId = ? , name = ? , tel = ? , province = ? , city = ? ,county = ? , addressDetail = ? , isDefault = ? , areaCode = ? where id = ' + id + ''
+                sqlFun(sqlupdate, arrInfo, result3 => {
+                    res.send({
+                        status: 200,
+                        msg: '更新成功'
+                    })
+                })
+            }
+        })
+    })
+})
+
+//删除地址
+router.get('/deleteAddress', (req, res) => {
+    // console.log(req.query);
+    let id = req.query.id
+    let sql = 'delete from address where id = ' + id + ''
+    console.log('delete from address where id = ' + id + '');
+    sqlFun(sql, null, result => {
+        res.send({
+            status: 200,
+            msg: '删除成功'
+        })
+    })
+})
+
+//生成订单
+router.get('/addOrder', (req, res) => {
+    let token = req.headers.token
+    let user = jwt.decode(token)
+        //前端给后端的数据
+    let OrderList = JSON.parse(req.query.OrderList);
+    // console.log(OrderList);
+    //生成订单号order_id，规则：时间戳 + 6为随机数
+    function setTimeDateFmt(s) {
+        return s < 10 ? '0' + s : s
+    }
+
+    function randomNumber() {
+        const now = new Date();
+        let month = now.getMonth() + 1;
+        let day = now.getDate();
+        let hour = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        month = setTimeDateFmt(month);
+        day = setTimeDateFmt(day);
+        hour = setTimeDateFmt(hour);
+        minutes = setTimeDateFmt(minutes);
+        seconds = setTimeDateFmt(seconds);
+        let orderCode = now.getFullYear().toString() + month.toString() + day + hour + minutes + seconds + (Math.round(Math.random() * 1000000)).toString();
+        return orderCode;
+    }
+    /*
+    未支付：1
+    待支付：2
+    支付成功：3
+    支付失败：4 | 0
+    */
+    //商品列表名称
+    let goodsName = [];
+    //订单商品总金额
+    let goodsPrice = 0;
+    //订单商品总数量
+    let goodsNum = 0;
+    //订单号
+    let orderId = randomNumber();
+
+
+    // console.log(OrderList);
+    OrderList.forEach(item => {
+            // console.log(item);
+            // console.log('----------------------------');
+            // console.log(item.goods_name);
+            goodsName.push(item.goods_name);
+            goodsPrice += item.goods_price * item.goods_num;
+            goodsNum += item.goods_num;
+        })
+        // console.log(goodsName);
+
+
+    let sql = 'select * from user where user_name = ' + user.user_name + ''
+    sqlFun(sql, null, result => {
+        //记录查询出来的userid
+        let uId = result[0].id
+        let arr = [uId, orderId, goodsName, goodsPrice, goodsNum, 1]
+        console.log(arr);
+        // let insertOrder = 'insert into payment_order (null,?,?,?,?,?,?)'
+        let insertOrder = 'insert into payment_order ( uId,order_id,goods_name,goods_price,goods_num,order_status ) values (' + uId + ',"' + orderId + '","' + goodsName + '","' + goodsPrice + '","' + goodsNum + '","1")'
+            // console.log('insert into payment_order ( uId,order_id,goods_name,goods_price,goods_num,order_status ) values (' + uId + ',"' + orderId + '","' + goodsName + '","' + goodsPrice + '","' + goodsNum + '","1")');
+        sqlFun(insertOrder, arr, result => {
+            res.send({
+                status: 200,
+                msg: '订单生成成功'
+            })
+        })
+    })
+})
+
+
+
+
+
+
+//开始做地址管理2  
+//添加地址
+// router.get('/addAddress', (req, res) => {
+//     let token = req.headers.token
+//     let user = jwt.decode(token)
+//         //用户的信息
+//         // console.log(req.query);
+//     let name = req.query.name //这个是用户名称
+//     let tel = req.query.tel
+//     let province = req.query.province
+//     let city = req.query.city
+//     let county = req.query.county
+//     let addressDetail = req.query.addressDetail
+//     let isDefault = req.query.isDefault
+//     let areaCode = req.query.areaCode
+//         // console.log(name, address, tel, area_code, is_default, );
+//     let sql = 'select * from user where user_name = ' + user.user_name + ''
+//     sqlFun(sql, null, result => {
+//         //记录查询出来的userid
+//         let uId = result[0].id
+//             // console.log(uId);
+//         let sqlSelectAddress = 'select * from address where uId = ' + uId + ' and province = "' + province + '" and city = "' + city + '" and county = "' + county + '" and addressDetail = "' + addressDetail + '" and name = "' + name + '" and  isDefault = "' + isDefault + '"'
+//             //console.log('select * from address where uId = ' + uId + ' and province = "' + province + '" and city = "' + city + '" and county = "' + county + '" and addressDetail = "' + addressDetail + '" and name = "' + name + '" and  isDefault = "' + isDefault + '"');
+//         sqlFun(sqlSelectAddress, null, result1 => {
+//             if (result1.length > 0) {
+//                 res.send({
+//                     status: 300,
+//                     msg: '相同信息已存在'
+//                 })
+//             } else {
+//                 let sqlIsNotDefault = 'select * from address where uId = ' + uId + ' and province = "' + province + '" and city = "' + city + '" and county = "' + county + '" and addressDetail = "' + addressDetail + '" and name = "' + name + '"'
+//                 sqlFun(sqlIsNotDefault, null, r => {
+//                     if (r.length > 0) {
+//                         let id = r[0].id
+//                             // console.log(id);
+//                             //先把开始设置的默认设置为0  后续在把勾选的设置为1
+//                         let sqlIsDefault = 'select * from address where uId = ' + uId + ' and isDefault = 1'
+//                         let sqlUpdateIsDefault = 'update address set isDefault = ' + isDefault + ' where id = ' + id + ''
+//                         sqlFun(sqlIsDefault, null, result2 => {
+//                             if (result2.length > 0) {
+//                                 let defaultId = result2[0].id
+//                                     // console.log(defaultId);
+//                                 let sqlUpdateDefault = 'update address set isDefault = 0 where id = ' + defaultId + ''
+//                                     // let sqlUpdateDefault = 'update address set isDefault = 0 and province = "' + province + '" and city = "' + city + '" and county = "' + county + '" and addressDetail = "' + addressDetail + '" and name = "' + name + '"  where id = ' + defaultId + ''
+//                                 sqlFun(sqlUpdateDefault, null, result3 => {
+//                                     sqlFun(sqlUpdateIsDefault, null, ress => {
+//                                         res.send({
+//                                             status: 200,
+//                                             msg: '更新成功'
+//                                         })
+//                                     })
+//                                 })
+//                             } else {
+//                                 sqlFun(sqlUpdateIsDefault, null, ress => {
+//                                     res.send({
+//                                         status: 200,
+//                                         msg: '更新成功'
+//                                     })
+//                                 })
+//                             }
+//                         })
+//                     } else {
+//                         let arrInfo = [uId, name, tel, province, city, county, addressDetail, isDefault, areaCode]
+//                             // console.log(arrInfo);
+//                         let sqlInsertAddress = 'insert into address values(null,?,?,?,?,?,?,?,?,?)'
+//                         let sqlIsDefault = 'select * from address where uId = ' + uId + ' and isDefault = 1'
+//                         sqlFun(sqlIsDefault, null, result2 => {
+//                             if (result2.length > 0) {
+//                                 let defaultId = result2[0].id
+//                                 let sqlUpdateDefault = 'update address set isDefault = 0 where id = ' + defaultId + ''
+//                                 sqlFun(sqlUpdateDefault, null, result3 => {
+//                                     sqlFun(sqlInsertAddress, arrInfo, (result4) => {
+//                                         res.send({
+//                                             status: 200,
+//                                             msg: '添加成功'
+//                                         })
+//                                     })
+//                                 })
+//                             } else {
+//                                 sqlFun(sqlInsertAddress, arrInfo, (result5) => {
+//                                     res.send({
+//                                         status: 200,
+//                                         msg: '添加成功',
+//                                         data: result5
+//                                     })
+//                                 })
+//                             }
+//                         })
+//                     }
+//                 })
+//             }
+//         })
+//     })
+// })
+
+// //进入地址管理首页加载地址
+// router.get('/getAddress', (req, res) => {
+//     let token = req.headers.token
+//     let user = jwt.decode(token)
+//         // console.log(user.user_name);
+//     let sql = 'select * from user where user_name = ' + user.user_name + ''
+//     sqlFun(sql, null, result => {
+//         //记录查询出来的userid
+//         let uId = result[0].id
+//             // console.log(uId);
+//         let sqlAddress = 'select * from address where uId = ' + uId + ''
+//         sqlFun(sqlAddress, null, result1 => {
+//             if (result1.length > 0) {
+//                 res.send({
+//                     status: 200,
+//                     msg: '获取地址',
+//                     data: result1
+//                 })
+//             } else {
+//                 res.send({
+//                     status: 400,
+//                     msg: '暂无地址'
+//                 })
+//             }
+//         })
+//     })
+// })
+
+//修改地址
+// router.get('/updateAddress', (req, res) => {
+//     let token = req.headers.token
+//     let user = jwt.decode(token)
+//         //用户的信息
+//     console.log(req.query);
+//     let name = req.query.name //这个是用户名称
+//     let tel = req.query.tel
+//     let province = req.query.province
+//     let city = req.query.city
+//     let county = req.query.county
+//     let addressDetail = req.query.addressDetail
+//     let isDefault = req.query.isDefault
+//     let areaCode = req.query.areaCode
+//     let arrInfo = [uId, name, tel, province, city, county, addressDetail, isDefault, areaCode]
+//     let sql = 'update address set isDefault = 0 where id = ' + defaultId + ''
+//     sqlFun(sql, arrInfo, result => {
+//         console.log(21);
+//         // if (result.length > 0) {
+//         //     res.send({
+//         //         status: 200,
+//         //         msg: '更新成功'
+//         //     })
+//         // } else {
+//         //     res.send({
+//         //         status: 400,
+//         //         msg: '更新失败'
+//         //     })
+//         // }
+//     })
+// })
+
+
 module.exports = router;

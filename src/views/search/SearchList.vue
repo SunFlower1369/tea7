@@ -30,7 +30,7 @@
     </div>
     <div class="list">
       <ul>
-        <li v-for="item in goodsList" :key="item.id">
+        <li v-for="item in goodsList" :key="item.id" @click="goDetail(item.id)">
           <div class="pic">
             <img v-lazy="item.imgUrl" alt="" />
           </div>
@@ -150,6 +150,14 @@ export default {
       }
       this.getData();
     },
+    goDetail(id) {
+      this.$router.push({
+        path: '/detail',
+        query: {
+          id,
+        },
+      });
+    },
   },
 };
 </script>
@@ -265,7 +273,7 @@ i {
   }
 }
 
-/deep/.van-list__loading {
+:deep(.van-list__loading) {
   margin: 0 auto;
 }
 </style>

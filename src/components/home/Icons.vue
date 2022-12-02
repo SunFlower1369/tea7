@@ -39,10 +39,4 @@ export default {
 .iconfont {
   font-size: 2rem;
 }
-// /deep/.van-grid-item__content {
-//   padding: 0;
-// }
-// /deep/.van-grid-item__text {
-//   font-size: 1rem;
-// }
 </style>

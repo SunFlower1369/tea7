@@ -6,7 +6,11 @@
         <i class="iconfont icon-zuojiantou"></i>
       </div>
       <div>购物车</div>
-      <div class="left-right">编辑</div>
+      <div
+        class="left-right"
+        @click="isEditBar"
+        v-text="isEdit ? '编辑' : '完成'"
+      ></div>
     </div>
     <!-- 上方通知栏 -->
     <van-notice-bar
@@ -38,11 +42,18 @@
           <template #title>
             <div class="title">
               <span>{{ item.goods_name }}</span>
-              <i class="iconfont icon-lajitong" @click="deleteGoods"></i>
+              <i
+                class="iconfont icon-lajitong"
+                @click="deleteGoods(item.id)"
+              ></i>
             </div>
           </template>
           <template #footer>
-            <van-stepper :value="item.goods_num" integer />
+            <van-stepper
+              :value="item.goods_num"
+              integer
+              @change="updateCount({ $event, item })"
+            />
           </template>
         </van-card>
       </div>
@@ -54,17 +65,29 @@
     <!-- 底部结算等 -->
     <div class="footer">
       <van-submit-bar
-        :price="totalPrice"
+        v-if="isEdit"
+        :price="totalPrice.totalPrice"
         button-text="去结算"
-        @submit="onSubmit"
+        @submit="onSubmit(selectList)"
       >
         <van-checkbox
-          :value="checked"
+          :value="isCheckAll"
           checked-color="#b0352f"
           @click="checkAllFun"
           >全选</van-checkbox
         >
       </van-submit-bar>
+      <!-- 这里是点击编辑后的底部 -->
+      <div v-else class="editFooter">
+        <van-submit-bar button-text="删除" @submit="deleteGoods">
+          <van-checkbox
+            :value="isCheckAll"
+            checked-color="#b0352f"
+            @click="checkAllFun"
+            >全选</van-checkbox
+          >
+        </van-submit-bar>
+      </div>
     </div>
     <Tabbar />
   </div>
@@ -80,28 +103,66 @@ export default {
   },
   data() {
     return {
-      checked: true,
+      isEdit: true,
     };
   },
   created() {
     this.getCartList();
+    // console.log(this.selectList);
   },
   computed: {
     ...mapState({
-      list: (state) => state.cartList.cartList,
+      list: (state) => state.cart.cartList,
+      selectList: (state) => state.cart.selectList,
     }),
     ...mapGetters(['isCheckAll', 'totalPrice']),
   },
   methods: {
     ...mapMutations(['cartList', 'checkOne']),
-    ...mapActions(['checkAllFun']),
-    onSubmit() {},
-    deleteGoods() {
-      console.log('删除');
+    ...mapActions(['checkAllFun', 'deleteGoods', 'updateCount']),
+    //结算
+    onSubmit(selectList) {
+      // console.log(selectList);
+      if (!selectList.length) {
+        this.$toast('请至少选择一件商品');
+        return;
+      }
+      let newList = [];
+      this.list.forEach((item) => {
+        // selectList中存的是ID
+        this.selectList.filter((v) => {
+          if (v == item.id) {
+            newList.push(item);
+          }
+        });
+      });
+
+      api
+        .axios({
+          url: '/api/addOrder',
+          headers: {
+            token: true,
+          },
+          params: {
+            OrderList: JSON.stringify(newList),
+          },
+        })
+        .then((res) => {
+          // console.log(res);
+          if (res.status == 200) {
+            this.$router.push({
+              path: '/order',
+              query: {
+                selectList: JSON.stringify(selectList),
+              },
+            });
+          }
+        });
     },
     goback() {
       this.$router.back();
     },
+    //获取购物车列表
     async getCartList() {
       await api
         .axios({
@@ -111,13 +172,33 @@ export default {
           },
         })
         .then((res) => {
-          // console.log( res.data);
           res.data.forEach((res) => {
             res['checked'] = true;
           });
           this.cartList(res.data);
         });
     },
+    isEditBar() {
+      this.isEdit = !this.isEdit;
+    },
+    //更新数量
+    // updateCount(value, id) {
+    //   // console.log(value, id);
+    //   api
+    //     .axios({
+    //       url: '/api/updateCount',
+    //       headers: {
+    //         token: true,
+    //       },
+    //       params: {
+    //         goods_num: value,
+    //         id,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //     });
+    // },
   },
 };
 </script>
@@ -125,27 +206,27 @@ export default {
 .header {
   display: flex;
   justify-content: space-between;
-  line-height: 2.75rem;
+  line-height: 44px;
   background-color: #b0352f;
   color: #fff;
   .left-right {
-    margin: 0 1rem;
+    margin: 0 16px;
   }
 }
 
 .goods-info {
   .all {
-    margin: 0.5rem 1rem;
+    margin: 8px 16px;
   }
   .goods-one {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 0.8rem;
-    margin-bottom: 0.3rem;
+    padding: 8px 12.8px;
+    margin-bottom: 4.8px;
     background-color: #fafafa;
     .mar {
-      margin: 0 0.5rem 0 0;
+      margin: 0 8px 0 0;
     }
     .info {
       flex: 1;
@@ -161,9 +242,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 3rem;
+  padding-top: 48px;
   i {
-    font-size: 8rem;
+    font-size: 128px;
     color: #dddddd;
   }
   span {
@@ -172,18 +253,24 @@ export default {
 }
 
 .van-submit-bar {
-  margin-bottom: 3.125rem;
+  margin-bottom: 50px;
 }
 
 .van-submit-bar__bar {
-  border: 0.0625rem solid #eee;
+  border: 1px solid #eee;
+  justify-content: space-between;
 }
 .van-card {
   padding: 0;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .van-card__content {
   justify-content: space-around;
+}
+
+.editFooter {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

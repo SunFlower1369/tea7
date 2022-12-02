@@ -14,6 +14,7 @@ Vue.use(VueRouter)
 const routes = [{
         path: '/',
         name: 'home',
+        meta: { isLogin: true },
         component: Home,
     },
     {
@@ -93,6 +94,31 @@ const routes = [{
                 component: () =>
                     import ('@/components/findPass/FindPassTwo.vue')
             },
+        ]
+    },
+    {
+        path: '/order',
+        name: 'Order',
+        component: () =>
+            import ('@/views/cart/Order.vue')
+    },
+    {
+        path: '/address',
+        name: 'Adderss',
+        component: () =>
+            import ('@/views/my/adderss/Index.vue'),
+        children: [{
+                path: '/',
+                name: 'PathIndex',
+                component: () =>
+                    import ('@/components/adderss/Index.vue')
+            },
+            {
+                path: '/addAddress',
+                name: 'AddAddress',
+                component: () =>
+                    import ('@/components/adderss/AddAddress.vue')
+            }
         ]
     },
 ]
